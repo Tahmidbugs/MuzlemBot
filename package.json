@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/Tahmidbugs/MuzlemBot#readme",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
     "discord.js": "^13.8.1",
     "mongoose": "^6.4.1",
-    "nodemon": "^2.0.18"
+    "nodemon": "^2.0.18",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
   }
 }

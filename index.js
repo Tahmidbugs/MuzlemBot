@@ -1,4 +1,4 @@
-const { Client, Intents } = require("discord.js");
+const { Client, Intents, MessageEmbed } = require("discord.js");
 
 const { dbcommands, dbNames } = require("./db");
 
@@ -6,14 +6,12 @@ const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-const token =
-  "OTkwNjM1ODU5ODEwMzI4NjE3.Gc1bbX.MHH4nPzzpHb1tU7ILaSkrQnTn_gvSd2l0LJE";
+const token = "OTkwNjM1ODU5ODEwMzI4NjEoH4nPzzpHb1tU7ILaSkrQnTn_gvSd2l0LJE";
 
 bot.login(token);
 bot.on("ready", () => {
   console.log("Bot is live! ");
 });
-
 const prefix = "habibi";
 
 let dbkeys = [];
@@ -42,6 +40,9 @@ bot.on("messageCreate", async (message) => {
   if (command.includes("assalam")) message.reply("WalaikumAssalam Habibi!");
   else if (searchdb) {
     dbcommands(message, command, key);
+  } else if (searchCommands) {
+    const X = require(`./${key}`);
+    X(message);
   } else {
     message.channel.send(
       "Habibi I don't know how I can help with that. Ask Allah, surely He is the best of helpers"
