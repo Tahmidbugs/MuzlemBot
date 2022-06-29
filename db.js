@@ -11,17 +11,10 @@ const Schema = new mongoose.Schema({
 
 const Reminder = mongoose.model("Reminder", Schema);
 
-async function createReminder() {
+async function createReminder(key, command) {
   const reminder = new Reminder({
-    name: "lonely",
-    verse: [
-      "“Allah is the ally of those who believe. He brings them out from darknesses into the light. And those who disbelieve – their allies are Taghut. They take them out of the light into darknesses. Those are the companions of the Fire; they will abide eternally therein.” – (Quran 2:257)",
-      "Your Lord has not abandoned you, nor has He become hateful ˹of you˺ [93:3]",
-      "Verily in the remembrance of Allah do hearts find rest. [13:28] ",
-      "And ˹surely˺ your Lord will give so much to you that you will be pleased.",
-      "Know that this worldly life is no more than play, amusement, luxury, mutual boasting, and competition in wealth and children.",
-      "And the next life is certainly far better for you than this one [93:4]",
-    ],
+    name: key,
+    verse: [command],
   });
   const result = await reminder.save();
   console.log(reminder);
@@ -50,6 +43,23 @@ async function addReminder(keyword, verse) {
   console.log(reminder);
 }
 
-exports.createReminder = createReminder;
-exports.getReminder = getReminder;
-exports.addReminder = addReminder;
+async function dbcommands(message, command, key) {
+  if (key == "create") {
+    command = command.replace(key, "").trim();
+    let name = command.split(" ")[0];
+    command = command.replace(name, "").trim();
+    createReminder(name, command);
+    return;
+  }
+  if (command.includes("update")) {
+    command = command.replace("update", "").replace(key, "").trim();
+    addReminder(key, command);
+    return;
+  }
+  let v = await getReminder(key);
+  message.channel.send(
+    "Habibi remember Allah says in the glorious Quran '" + v + "'"
+  );
+}
+
+exports.dbcommands = dbcommands;
