@@ -4,7 +4,7 @@ const bot = new Client({
 });
 
 const token =
-  "OTkwNjM1ODU5ODEwMzI4NjE3.GpSEqF._nRmN7_Hsjr1hEum4Q0OkhMrhzOQpbOEkmd9n0";
+  "OTkwNjM1ODU5ODEwMzI4NjE3.GpSEqF._nRmN7_Tsjr1hEum4Q0OkhMrhzOQpbOEkmd9n0";
 
 bot.login(token);
 bot.on("ready", () => {
