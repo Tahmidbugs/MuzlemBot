@@ -19,18 +19,20 @@ async function getPrayers(message) {
       const index = record.indexOf(date) + (date.length == 6 ? 6 : 5);
       const subs = record.substring(index, index + 36);
       timings = {
-        Fajr: subs.substring(0, 5),
-        Dhuhr: subs.substring(10, 15),
-        Asr: subs.substring(15, 20),
-        Maghrib: subs.substring(20, 25),
-        Isha: subs.substring(25, 30),
+        Fajr: subs.substring(0, 5) + "  🌄",
+        Dhuhr: subs.substring(10, 15) + "  🌞",
+        Asr: subs.substring(15, 20) + "  🌇",
+        Maghrib: subs.substring(20, 25) + "  🌆",
+        Isha: subs.substring(25, 30) + "  🌃",
       };
       let time = "";
       for (const p in timings) {
-        time += p + " is at " + timings[p] + "\n";
+        time += p + " : " + timings[p] + "\n";
       }
       const embed = new MessageEmbed()
+
         .setTitle(`Prayer times for today, ${Date().substring(0, 16)}:`)
+        .setColor("#0099ff")
         .setDescription(`${time} `);
 
       message.channel.send({ embeds: [embed] });
