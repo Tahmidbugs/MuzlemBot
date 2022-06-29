@@ -1,0 +1,23 @@
+{
+  "name": "muzlembot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tahmidbugs/MuzlemBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tahmidbugs/MuzlemBot/issues"
+  },
+  "homepage": "https://github.com/Tahmidbugs/MuzlemBot#readme",
+  "dependencies": {
+    "discord.js": "^13.8.1",
+    "nodemon": "^2.0.18"
+  }
+}
