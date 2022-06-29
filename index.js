@@ -1,13 +1,13 @@
 const { Client, Intents } = require("discord.js");
 
-const { dbcommands } = require("./db");
+const { dbcommands, dbNames } = require("./db");
 
 const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
 const token =
-  "OTkwNjM1ODU5ODEwMzI4NjE3.GRa0fm.ZIudMgBi5-kgyCS511atNgQtLvfg5QRSpQWyIQ";
+  "OTkwNjM1ODU5ODEwMzI4NjE3.Gc1bbX.MHH4nPzzpHb1tU7ILaSkrQnTn_gvSd2l0LJE";
 
 bot.login(token);
 bot.on("ready", () => {
@@ -15,14 +15,17 @@ bot.on("ready", () => {
 });
 
 const prefix = "habibi";
-const dbKeys = ["sad", "lonely", "create", "depressed"];
+
+let dbkeys = [];
+dbNames().then((x) => (dbkeys = x));
+
 const commands = ["prayer", "salam"];
 
 bot.on("messageCreate", async (message) => {
   if (!message.content.includes(prefix) || message.author.bot) return;
   let command = message.content.replace(prefix, "").trimStart();
 
-  const searchdb = dbKeys.some((el) => {
+  const searchdb = dbkeys.some((el) => {
     if (command.includes(el)) {
       key = el;
       return el;

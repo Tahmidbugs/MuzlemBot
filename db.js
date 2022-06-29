@@ -11,6 +11,15 @@ const Schema = new mongoose.Schema({
 
 const Reminder = mongoose.model("Reminder", Schema);
 
+async function getDocNames() {
+  const result = await Reminder.find().select({ name: 1, _id: 0 });
+  const arr = [];
+  result.forEach((item) => {
+    arr.push(item.name);
+  });
+  return arr;
+}
+
 async function createReminder(key, command) {
   const reminder = new Reminder({
     name: key,
@@ -57,9 +66,11 @@ async function dbcommands(message, command, key) {
     return;
   }
   let v = await getReminder(key);
+
   message.channel.send(
     "Habibi remember Allah says in the glorious Quran '" + v + "'"
   );
 }
 
 exports.dbcommands = dbcommands;
+exports.dbNames = getDocNames;
