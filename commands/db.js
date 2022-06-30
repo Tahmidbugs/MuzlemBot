@@ -9,6 +9,12 @@ const Schema = new mongoose.Schema({
   verse: [String],
 });
 
+const QuranSchema = new mongoose.Schema({
+  name: String,
+  verse: [String],
+});
+const Quran = mongoose.model("Quran", QuranSchema);
+
 const Reminder = mongoose.model("Reminder", Schema);
 
 async function getDocNames() {
@@ -19,7 +25,6 @@ async function getDocNames() {
   });
   return arr;
 }
-
 async function createReminder(key, command) {
   const reminder = new Reminder({
     name: key,
@@ -29,6 +34,15 @@ async function createReminder(key, command) {
   console.log(reminder);
 }
 
+async function createSurah(key, command) {
+  const reminder = new Quran({
+    name: key,
+    verse: [command],
+  });
+  const result = await reminder.save();
+  console.log(reminder);
+}
+// createSurah("surah ale imran", "Alif Laam Meem");
 async function getReminder(keyword) {
   const reminder = await Reminder.find({ name: keyword }).select({
     verse: 1,
@@ -58,11 +72,14 @@ async function dbcommands(message, command, key) {
     let name = command.split(" ")[0];
     command = command.replace(name, "").trim();
     createReminder(name, command);
+    message.channel.send(`New Collection: ${name} Added to database`);
     return;
   }
   if (command.includes("update")) {
     command = command.replace("update", "").replace(key, "").trim();
     addReminder(key, command);
+    console.log("updated");
+    message.channel.send(`New Verse Added to the collection: ${key}`);
     return;
   }
   let v = await getReminder(key);
@@ -72,5 +89,27 @@ async function dbcommands(message, command, key) {
   );
 }
 
+// const rp = require("request-promise");
+// const cheerio = require("cheerio");
+
+// async function pushSurah() {
+//   await rp(url).then((html) => {
+//     let $ = cheerio.load(html);
+//     const xd = $(".elementor-button-wrapper");
+//     console.log("LINKS");
+//     $(".elementor-button-wrapper").each(async (i, el) => {
+//       const link = $(el).find("a").attr("href");
+//       urls.push(link)
+//     });
+
+//     console.log("TITLES");
+//     $(".elementor-widget-container").each(async (i, el) => {
+//       const title = $(el).find("p").text();
+//       console.log(title);
+//     });
+//   });
+// }
+
+// pushSurah();
 exports.dbcommands = dbcommands;
 exports.dbNames = getDocNames;
